@@ -9,4 +9,5 @@ urlpatterns = [
   # path('jobs/<str:pk>/delete/', views.deleteJob, name='delete_job'),
   # path('stats/<str:topic>/', views.getTopicStats, name='get_topic_stats'),
   path('jobs/getTranscript/', views.getTranscript, name='get_transcript'),
+  path('jobs/queryEndpoint/', views.queryEndpoint, name='query_endpoint')
 ]
