@@ -71,6 +71,9 @@ def queryEndpoint(request):
 
     response = query_berry(url, query)
 
+    # print('queryEndpoint output = ', response)
+
+
     return Response({'message': response}, status=status.HTTP_200_OK)
 
 

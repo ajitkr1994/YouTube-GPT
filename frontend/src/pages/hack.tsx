@@ -33,7 +33,7 @@ const CreateSession: React.FC = () => {
     });
 
     console.log('query response = ', response.data);
-    setAnswer(response.data.message);
+    setAnswer(response.data);
   }
 
   return (
