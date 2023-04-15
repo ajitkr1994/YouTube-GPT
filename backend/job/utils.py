@@ -1,6 +1,9 @@
 from pytube import YouTube
 import whisper
 import pandas as pd
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+
 
 def download_audio_from_youtube(video_url, filename):
     """
