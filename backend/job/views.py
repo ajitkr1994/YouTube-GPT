@@ -15,7 +15,7 @@ from .utils import *
 
 # Create your views here.
 model = load_whisper_model()
-
+file_path_transcript = "./job/transcript_blob.txt"
 
 @api_view(['GET'])
 def getAllJobs(request):
@@ -50,12 +50,12 @@ def getTranscript(request):
     if does_url_app_exists(url):
         return Response({'message': 'random'}, status=status.HTTP_200_OK)
 
-    # output_string = transcribe_audio(model, download_audio_from_youtube(url, "audio.mp4"))
-    output_string = "my random string"
-    file = open("transcript_blob.txt", 'w')
-    file.write(output_string)
-
-    berry_endpoint = create_berry_app(file_name="transcript_blob.txt")
+    output_string = transcribe_audio(model, download_audio_from_youtube(url, "audio.mp4"))
+    #output_string = "my random string"
+    with open(file_path_transcript, 'w') as file:
+      file.write(output_string)
+    
+    berry_endpoint = create_berry_app(file_name=file_path_transcript)
 
     update_url_endpoint_mapping(url, berry_endpoint)
 

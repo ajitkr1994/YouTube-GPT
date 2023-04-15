@@ -83,14 +83,16 @@ def create_berry_app(file_name: str) -> str:
 
     response = requests.post(BERRY_CREATE_TEMPLATE_URL, data=create_template_data)
     template_id = response.json()["template_id"]
+    print("template_id: {}".format(template_id))
 
     # Now let's create an app
     create_app_data = {"template_id": template_id, "user_email": "test@berri.ai"}
 
+    print("FILE_NAME: {}".format(file_name))
     files = {'data_source': open(file_name, 'rb')}
 
     response = requests.post(BERRY_CREATE_APP_URL, files=files, data=create_app_data)
-
+    
     print(response.text)
 
     api_endpoint = response.json()["api_endpoint"]
