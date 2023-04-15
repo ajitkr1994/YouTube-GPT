@@ -18,6 +18,10 @@ import pandas
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SECRET_KEY='qmklx$5a2+y&-p2=4ea0t%8eg=ofy4^+wd9%s^x%-tx$i=7*a7'
+
+DEBUG=True
+
 
 dotenv.read_dotenv()
 

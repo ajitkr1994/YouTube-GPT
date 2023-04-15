@@ -46,8 +46,8 @@ def getTranscript(request):
   data = request.data
   url = data['url']
 
-  output_string = transcribe_audio(model, download_audio_from_youtube(url, "audio.mp4"))
+  # output_string = transcribe_audio(model, download_audio_from_youtube(url, "audio.mp4"))
 
   print('backend received url = ', url)
 
-  return Response({'message': output_string}, status=status.HTTP_200_OK)
+  return Response({'message': 'random'}, status=status.HTTP_200_OK)

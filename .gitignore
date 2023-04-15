@@ -46,4 +46,4 @@ tsconfig.tsbuildinfo
 
 *pycache*
 
-venv_2/
+venv_2/*
