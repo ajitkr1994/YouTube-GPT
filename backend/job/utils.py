@@ -63,6 +63,7 @@ def transcribe_audio(whisper_model, audio_file):
 
 BERRY_CREATE_TEMPLATE_URL = "https://api.berri.ai/create_template"
 BERRY_CREATE_APP_URL = "https://api.berri.ai/create_app"
+BERRY_QUERY_APP_URL = "https://api.berri.ai/query"
 
 def create_berry_app(file_name: str) -> str:
     """
@@ -103,7 +104,7 @@ def does_url_app_exists(url: str) -> bool:
     :param url: input url
     :returns: corresponding bool
     """
-    mapping_file = open("url_app_mapping.json", 'r')
+    mapping_file = open("./job/url_app_mapping.json", 'r')
     mapping = json.load(mapping_file)
 
     if url in mapping:
@@ -116,7 +117,34 @@ def update_url_endpoint_mapping(url: str, berry_endpoint: str) -> None:
     """
     Update url, berry endpoint mapping
     """
-    mapping_file = open("url_app_mapping.json", 'r+')
-    mapping = json.load(mapping_file)
+    mapping_file_read = open("./job/url_app_mapping.json", 'r')
+    mapping = json.load(mapping_file_read)
+
+    mapping_file_write = open("./job/url_app_mapping.json", 'w')
     mapping[url] = berry_endpoint
-    mapping_file.write(mapping)
+    mapping_file_write.write(json.dumps(mapping))
+
+
+
+def query_berry(url: str, my_query: str) -> str:
+    """
+    Query berry endpoint corresponding to an input url
+    """
+    mapping_file = open("./job/url_app_mapping.json", 'r')
+    mapping = json.load(mapping_file)
+
+    berry_endpoint = mapping[url]
+
+    querystring = {
+        "user_email": "test@berri.ai",
+        "instance_id": berry_endpoint,
+        "query": my_query,
+        "model": "gpt-3.5-turbo"
+    }
+
+    response = requests.get(url, params=querystring)
+
+    return response.text
+
+
+

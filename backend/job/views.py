@@ -62,4 +62,16 @@ def getTranscript(request):
     return Response({'message': 'random'}, status=status.HTTP_200_OK)
 
 
+@csrf_exempt
+@api_view(['POST'])
+def queryEndpoint(request):
+    data = request.data
+    url = data['url']
+    query = data['my_query']
+
+    response = query_berry(url, query)
+
+    return Response({'message': 'response'}, status=status.HTTP_200_OK)
+
+
 
