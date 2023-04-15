@@ -8,7 +8,7 @@ import pandas as pd
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
-from urllib.parse import urlencode
+from urllib.parse import urlencode, quote
 
 
 def download_audio_from_youtube(video_url, filename):
@@ -153,7 +153,8 @@ def query_berry(url: str, my_query: str) -> str:
     # print('instance_id = ', urlparse(berry_endpoint).query.split('=')[-1])
 
     # response = requests.get(url, params=querystring)
-    response = requests.get('https://api.berri.ai/query?user_email=test@berri.ai&instance_id=715a7a9b-9ef7-4ad1-a47d-d604e5d7eae4&query=What\'s%20the%20video%20about')
+    instance_id = urlparse(berry_endpoint).query.split('=')[-1]
+    response = requests.get(f'https://api.berri.ai/query?user_email=test@berri.ai&instance_id={instance_id}&query={quote(my_query)}')
 
     # print('query_berry response = ', response)
 
