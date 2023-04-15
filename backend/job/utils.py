@@ -143,22 +143,21 @@ def query_berry(url: str, my_query: str) -> str:
     querystring = {
         "user_email": "test@berri.ai",
         "instance_id": urlparse(berry_endpoint).query.split('=')[-1],
-        "query": urlencode(my_query),
+        "query": my_query,
         "model": "gpt-3.5-turbo"
     }
 
-    
+    print(querystring)
 
-    print('urlencode(my_query)=', urlencode(my_query))
-    print('instance_id = ', urlparse(berry_endpoint).query.split('=')[-1])
+    # print('urlencode(my_query)=', urlencode(my_query))
+    # print('instance_id = ', urlparse(berry_endpoint).query.split('=')[-1])
 
-    response = requests.get(url, params=querystring)
+    # response = requests.get(url, params=querystring)
+    response = requests.get('https://api.berri.ai/query?user_email=test@berri.ai&instance_id=715a7a9b-9ef7-4ad1-a47d-d604e5d7eae4&query=What\'s%20the%20video%20about')
 
     # print('query_berry response = ', response)
 
-    print(response.text)
-
-    return response.text
+    return response.json()['response']
 
 
 
