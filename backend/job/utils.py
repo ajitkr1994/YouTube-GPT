@@ -116,7 +116,7 @@ def update_url_endpoint_mapping(url: str, berry_endpoint: str) -> None:
     """
     Update url, berry endpoint mapping
     """
-    mapping_file = open("url_app_mapping.json.txt", 'r+')
+    mapping_file = open("url_app_mapping.json", 'r+')
     mapping = json.load(mapping_file)
     mapping[url] = berry_endpoint
     mapping_file.write(mapping)
