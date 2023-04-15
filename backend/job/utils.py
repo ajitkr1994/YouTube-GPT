@@ -1,26 +1,6 @@
-from django.http import JsonResponse
-# from pytube import YouTube
-# import whisper
+from pytube import YouTube
+import whisper
 import pandas as pd
-
-def handler500(request):
-    message = ('Internal Server error')
-
-    response = JsonResponse(data={'error': message})
-    response.status_code = 500
-
-    return response
-
-def handler404(request, exception):
-    message = ('Not found')
-
-    response = JsonResponse(data={'error': message})
-    response.status_code = 404
-
-    return response
-
-
-
 
 def download_audio_from_youtube(video_url, filename):
     """
