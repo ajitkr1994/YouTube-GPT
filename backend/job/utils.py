@@ -1,4 +1,5 @@
 import json
+from urllib.parse import urlparse
 
 import requests
 from pytube import YouTube
@@ -139,7 +140,7 @@ def query_berry(url: str, my_query: str) -> str:
 
     querystring = {
         "user_email": "test@berri.ai",
-        "instance_id": berry_endpoint,
+        "instance_id": urlparse(berry_endpoint).query.split('=')[-1],
         "query": my_query,
         "model": "gpt-3.5-turbo"
     }
