@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from 'axios';
+import { Box, Divider, Typography } from "@mui/material";
 
 const CreateSession: React.FC = () => {
   const [url, setUrl] = useState("");
   const [query, setQuery] = useState("");
   const [answer, setAnswer] = useState('');
+
+  useEffect(() => {
+    
+
+  }, [answer]);
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
@@ -21,11 +27,12 @@ const CreateSession: React.FC = () => {
   const onAsk = async (e: any) => {
     e.preventDefault();
 
-    const response = await axios.post(`${process.env.API_URL}/api/jobs/getTranscript/`, {
-      url
-    });
+    // const response = await axios.post(`${process.env.API_URL}/api/jobs/answerQuestion/`, {
+    //   url,
+    //   query
+    // });
 
-    
+    setAnswer('abc');
   }
 
   return (
@@ -38,7 +45,7 @@ const CreateSession: React.FC = () => {
           alt="Your Company"
         />
         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-          Paste Youtube URL and hit submit to generate the model.
+          Paste Youtube URL and ask any questions about it.
         </h2>
       </div>
       <form className="mt-8 space-y-6" action="#" method="POST">
@@ -106,6 +113,32 @@ const CreateSession: React.FC = () => {
 
       
     </div>
+
+    
+      {answer && 
+      <div style={{display: 'flex', flexDirection: 'row', gap: '50px', marginTop: '50px'}}>
+      <Box
+        border={1}
+        borderColor="grey"
+        height={400}
+        width={500}
+        display="flex"
+        // justifyContent="center"
+        // alignItems="center"
+        color="black"
+        fontSize={24}
+        flexDirection={'column'}
+        padding={2}
+      >
+        <Typography variant="h5" display={'flex'} justifyContent={'center'} alignItems={'center'}>Script</Typography>
+        <Divider />
+        <p style={{overflow: 'scroll', fontSize: 'large'}}>
+          {answer}
+        </p>
+      </Box>
+      </div>
+      }
+    
   </div>
   );
 };
