@@ -27,11 +27,12 @@ const CreateSession: React.FC = () => {
   const onAsk = async (e: any) => {
     e.preventDefault();
 
-    // const response = await axios.post(`${process.env.API_URL}/api/jobs/answerQuestion/`, {
-    //   url,
-    //   query
-    // });
+    const response = await axios.post(`${process.env.API_URL}/api/jobs/queryEndpoint/`, {
+      url,
+      my_query: query
+    });
 
+    console.log('query response = ', response.data);
     setAnswer('abc');
   }
 

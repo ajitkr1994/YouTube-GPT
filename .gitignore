@@ -47,3 +47,5 @@ tsconfig.tsbuildinfo
 *pycache*
 
 venv_2/*
+backend/job/url_app_mapping.json*
+backend/transcript_blob.txt
