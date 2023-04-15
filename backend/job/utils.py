@@ -1,3 +1,6 @@
+import json
+
+import requests
 from pytube import YouTube
 import whisper
 import pandas as pd
@@ -57,3 +60,63 @@ def transcribe_audio(whisper_model, audio_file):
     """
     transcription = whisper_model.transcribe(audio_file)
     return transcription['text']
+
+BERRY_CREATE_TEMPLATE_URL = "https://api.berri.ai/create_template"
+BERRY_CREATE_APP_URL = "https://api.berri.ai/create_app"
+
+def create_berry_app(file_name: str) -> str:
+    """
+    Creates berry template and app
+    :param file_name: name of file in same directory
+    :returns: berry app api endpoint
+    """
+    # Creating a template, update below config later
+    app_config = {
+        "advanced": {
+            "intent": "qa_doc",
+            "search": "default"
+        }
+    }
+
+    create_template_data = {"app_config": json.dumps(app_config)}
+
+    response = requests.post(BERRY_CREATE_TEMPLATE_URL, data=create_template_data)
+    template_id = response.json()["template_id"]
+
+    # Now let's create an app
+    create_app_data = {"template_id": template_id, "user_email": "test@berri.ai"}
+
+    files = {'data_source': open(file_name, 'rb')}
+
+    response = requests.post(BERRY_CREATE_APP_URL, files=files, data=create_app_data)
+
+    print(response.text)
+
+    api_endpoint = response.json()["api_endpoint"]
+
+    return api_endpoint
+
+
+def does_url_app_exists(url: str) -> bool:
+    """
+    Method to check if we already have an app for a requested URL
+    :param url: input url
+    :returns: corresponding bool
+    """
+    mapping_file = open("url_app_mapping.json.txt", 'r')
+    mapping = json.load(mapping_file)
+
+    if url in mapping:
+        return True
+
+    return False
+
+
+def update_url_endpoint_mapping(url: str, berry_endpoint: str) -> None:
+    """
+    Update url, berry endpoint mapping
+    """
+    mapping_file = open("url_app_mapping.json.txt", 'r+')
+    mapping = json.load(mapping_file)
+    mapping[url] = berry_endpoint
+    mapping_file.write(mapping)
