@@ -103,7 +103,7 @@ def does_url_app_exists(url: str) -> bool:
     :param url: input url
     :returns: corresponding bool
     """
-    mapping_file = open("url_app_mapping.json.txt", 'r')
+    mapping_file = open("url_app_mapping.json", 'r')
     mapping = json.load(mapping_file)
 
     if url in mapping:
